@@ -8,15 +8,28 @@ const getUsers = async () => {
   return users;
 };
 
+//To get User By certain coditions
+const getUsersBycondition = async (condition) => {
+  const users = await User.find(codition);
+  return users;
+};
+
 //To get an single user
 const getUserById = async (id) => {
+  console.log("called successfully gois");
   const user = await User.findById(id);
   return user;
 };
 
 //To get user status by login credential
-const getUserStatusByLoginCredentials = async (userdata) => {
-  const userData = await User.findOne(userdata, "status");
+const getUserStatusByLoginCredentials = async (registerData) => {
+  const userData = await User.findOne(registerData, "status");
+  return userData;
+};
+
+//To get user by login fields
+const getUserByLoginCredential = async (loginData) => {
+  const userData = await User.findOne(loginData);
   return userData;
 };
 
@@ -51,10 +64,12 @@ const checkUserExistsByLoginCredentials = async (userData) => {
 //exporting all of the functions
 module.exports = {
   getUsers,
-  setUser,
+  getUsersBycondition,
   getUserById,
+  getUserByLoginCredential,
+  getUserStatusByLoginCredentials,
+  setUser,
+  updateUser,
   checkUserExistsById,
   checkUserExistsByLoginCredentials,
-  getUserStatusByLoginCredentials,
-  updateUser
 };

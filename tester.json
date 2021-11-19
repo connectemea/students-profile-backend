@@ -1,0 +1,85 @@
+{
+  "personalDetails": {
+    "name": "biran",
+    "email": "biran@thekethodi.com",
+    "admissionNO": "1016",
+    "yearOfJoin": "2001",
+    "department": "computer science",
+    "mobileNo": "5556667771",
+    "dateOfBirth": "18-12-1888",
+    "gender": "male",
+    "bloodGroup": "abc",
+    "maritalStatus": "pennkitila",
+    "religion": "akanaonnum ella",
+    "cast": "nothing monu",
+    "categoryOfAdmission": "ied",
+    "identificationMarkOne": "have 2 nose",
+    "identificationMarkTwo": "have 2 ears",
+    "presentAddress": "tharamel ann",
+    "permenentAddress": "tharamel ann",
+    "residence": "arante pera",
+    "distanceFromCollege": "24",
+  },
+  "educationDetails": {
+    "tenthStd": {
+      "schoolName": "gulp thekethodi",
+      "syllabus": "global",
+      "english": "12",
+      "maths": "25",
+      "science": "50",
+      "socialScience": "60",
+    },
+    "twelthStd": {
+      "schoolName": "guhss thekethodi",
+      "syllabus": "global big sylabus",
+      "course": "big course he bhai",
+      "sub": ["englis", "maths", "physics", "chemistry"],
+      "subMark": ["1", "2", "3", "4"],
+    },
+  },
+  "familyDetails": {
+    "father": {
+      "name": "papa",
+      "educationQualification": "Bsc CS",
+      "annualIncome": "23000",
+      "occupation": "thera para",
+      "officialAddress": "thekethodi house ,somewhere",
+    },
+    "mother": {
+      "name": "mama",
+      "educationQualification": "Bsc CS",
+      "annualIncome": "23000",
+      "occupation": "thera para",
+      "officialAddress": "thekethodi house ,somewhere",
+    },
+    "gardian": {
+      "name": "mera gardian",
+      "educationQualification": "Bsc CS",
+      "annualIncome": "23000",
+      "occupation": "thera para",
+      "officialAddress": "thekethodi house ,somewhere"
+    }
+  },
+  "teacherDetails":{
+    "name":"riyadh",
+    "department":"computerscience",
+    "shortName":"rd",
+    "email":"riyadh@gmail.com",
+    "phoneNo":"10203040",
+    "joinYear":"2021",
+    "gender":"male",
+    "maritalStatus":"maried",
+    "religion":"muslim",
+    "cast":"mappila",
+    "educationQualification":"Bsc CS"
+  },
+
+  "studentToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTRhOWFmMGE2ZTAzMTk3NzRmZmI5ZCIsInR5cGUiOiJzdHVkZW50IiwiaWF0IjoxNjM3MTMyNzkyfQ.ulWIUUvUjU5Z8s53AsKjebUORCjROz1OGb5-b6HZp4w",
+  "teacherToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTRkZjAwYWIzMjgyNTg5OWMxYWYyYSIsInR5cGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNjM3MTQ2NTcyfQ.etPrdtkbpKK9DuSjkOPC9zpkLJk4_7cTAMQGtZeOF6c",
+  "adminToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTQ5Nzc1NDBmZGQ2MjEzMTQzOGIyZSIsInR5cGUiOiJhZG1pbiIsImlhdCI6MTYzNzEyOTI1Nn0.fsgNjkMT0_wufz8CVISvrcwbYqzFVrYYwarQF6IlwfM",
+  "rasheedTeacher":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTVkYjA2MmVlODRhYzIwODk2MmM1NiIsInR5cGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNjM3MjEwOTUzfQ.d3LnAVyM5mBPLUvAZpRHgn_j_sHnmBBzPIngol2EMBQ"
+
+}
+
+
+

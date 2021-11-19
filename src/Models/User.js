@@ -16,6 +16,14 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  userType: {
+    type: String,
+    required: true,
+  },
+  sponsorId: {
+    type: mongoose.ObjectId,
+    required: true,
+  },
   createdTime: {
     type: Date,
     default: Date.now,
