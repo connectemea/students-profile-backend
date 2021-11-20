@@ -81,7 +81,7 @@ router.get("/:filename", authService.autheticateTheUser, async (req, res) => {
 });
 
 //route to delete the uploaded file
-router.delete("/:filename", (req, res) => {
+router.delete("/:filename", async (req, res) => {
   if (checkUserHavePermission("teacher", req.body.user.type))
     res
       .status(404)
