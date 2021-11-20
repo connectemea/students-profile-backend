@@ -8,7 +8,7 @@ const authService = require("../Services/Auth");
 const teacherService = require("../Services/Teacher");
 
 const userService = require("../Services/User");
-const mongoose = require("mongoose");
+
 // Utility to check the user permissions
 const { checkUserHavePermission } = require("../helper/userPermission");
 
