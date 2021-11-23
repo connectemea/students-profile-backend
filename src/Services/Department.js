@@ -1,5 +1,5 @@
 //department model
-const Department = require("../models/department");
+const Department = require("../Models/Department");
 
 //To get all departments
 const getAllDepartments = async () => {
