@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 require("dotenv/config");
 
 // getting port from the environmental variables
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 5000;
 
 // creating an instance of the express app
 const app = express();
