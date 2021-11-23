@@ -6,9 +6,6 @@ const bodyParser = require("body-parser");
 // importing the environmental variables
 require("dotenv/config");
 
-// getting port from the environmental variables
-const PORT = process.env.PORT || 6000;
-
 // creating an instance of the express app
 const app = express();
 
@@ -46,5 +43,11 @@ mongoose.connect(process.env.DB_CONNECTION, () =>
   console.info("DB CONNECTED SUCCESSFULLY")
 );
 
-// Running server in port 4000
-app.listen(PORT);
+// Running server
+app.listen(process.env.PORT || 3000, function () {
+  console.log(
+    "Express server listening on port %d in %s mode",
+    this.address().port,
+    app.settings.env
+  );
+});
