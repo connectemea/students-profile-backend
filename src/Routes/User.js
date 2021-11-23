@@ -73,7 +73,7 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 });
 
 //registering new user
-router.patch("/register", authService.autheticateTheUser, async (req, res) => {
+router.patch("/register", async (req, res) => {
   console.log()
   //destructuring req body
   const { username, email, password } = req.body;
@@ -119,7 +119,7 @@ router.patch("/register", authService.autheticateTheUser, async (req, res) => {
 });
 
 // login new user
-router.post("/login", authService.autheticateTheUser, async (req, res) => {
+router.post("/login", async (req, res) => {
   //destructuring the body
   const { email, password } = req.body;
 

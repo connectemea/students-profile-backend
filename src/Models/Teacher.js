@@ -13,6 +13,10 @@ const TeacherSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  profileImage: {
+    type: String,
+    required: true,
+  },
   department: {
     type: String,
     required: true,

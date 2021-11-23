@@ -3,3 +3,6 @@
 
 #secret keys
 .env
+
+#secret api keys
+tester.json
