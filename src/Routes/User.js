@@ -144,7 +144,7 @@ router.post("/login", async (req, res) => {
     if (!userData) {
       return res.status(401).send({ message: "invalid email or password" });
     }
-    
+
     //check the user is registered or not
     if (userData.status === "created") {
       return res.status(401).send({ message: "user is not registered" });
@@ -167,7 +167,7 @@ router.post("/login", async (req, res) => {
 
     res
       .status(200)
-      .send({ message: "Successfully logged in", token: userToken });
+      .send({ message: "Successfully logged in", data: {userToken }});
   } catch (err) {
     return res.status(401).send({ message: err.message });
   }
