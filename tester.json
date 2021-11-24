@@ -73,6 +73,13 @@
     "cast":"mappila",
     "educationQualification":"Bsc CS"
   },
+  "departmentDetails":{
+    "name":"Bio Tech",
+    "shortName":"BT",
+    "hod":"birankutty",
+    "phoneNo":"1020304050",
+    "email":"biran@gmail.com"
+  },
 
   "studentToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTRhOWFmMGE2ZTAzMTk3NzRmZmI5ZCIsInR5cGUiOiJzdHVkZW50IiwiaWF0IjoxNjM3MTMyNzkyfQ.ulWIUUvUjU5Z8s53AsKjebUORCjROz1OGb5-b6HZp4w",
   "teacherToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTRkZjAwYWIzMjgyNTg5OWMxYWYyYSIsInR5cGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNjM3MTQ2NTcyfQ.etPrdtkbpKK9DuSjkOPC9zpkLJk4_7cTAMQGtZeOF6c",

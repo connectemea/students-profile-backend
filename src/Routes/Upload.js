@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
         res.status(200).send({
           message: "File uploaded successfully",
           data: {
-            filepath: `/uploads/${req.file.filename}`,
+            filepath: `/upload/${req.file.filename}`,
           },
         });
       }
@@ -81,7 +81,7 @@ router.get("/:filename", authService.autheticateTheUser, async (req, res) => {
 });
 
 //route to delete the uploaded file
-router.delete("/:filename", async (req, res) => {
+router.delete("/:filename", authService.autheticateTheUser, async (req, res) => {
   if (checkUserHavePermission("teacher", req.body.user.type))
     res
       .status(404)

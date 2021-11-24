@@ -73,8 +73,8 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 });
 
 //registering new user
-router.patch("/register", async (req, res) => {
-  console.log()
+router.patch("/register", authService.autheticateTheUser, async (req, res) => {
+  console.log();
   //destructuring req body
   const { username, email, password } = req.body;
 
@@ -134,17 +134,22 @@ router.post("/login", async (req, res) => {
     //login credentials
     const loginCredentials = {
       email,
-      status: "registred",
     };
 
     //check the user and also is the user legit or not
     const userData = await userService.getUserByLoginCredential(
       loginCredentials
     );
-    console.log(userData);
+    //check the user exist or not
     if (!userData) {
       return res.status(401).send({ message: "invalid email or password" });
     }
+    
+    //check the user is registered or not
+    if (userData.status === "created") {
+      return res.status(401).send({ message: "user is not registered" });
+    }
+
     //decrypt the password the password
     const decryptedPassword = authService.decryptPassword(userData.password);
     if (password !== decryptedPassword) {

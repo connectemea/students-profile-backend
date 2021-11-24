@@ -144,14 +144,24 @@ router.patch(
   "/:studentId",
   authService.autheticateTheUser,
   async (req, res) => {
+    //get the student from the db
+    const studentProfile = await studentService.getStudentById(
+      req.params.studentId
+    );
+
+    //check student exist or not
+    if (!studentProfile)
+      return res.status(401).send({ message: "student not exist" });
+      
     // check this is student autheraized or not
     if (
       req.body.user.type !== "student" ||
-      req.body.user.id !== req.params.studentId
+      studentProfile.userId.toString() !== req.body.user.id
     )
       return res
         .status(401)
         .send({ message: "You have no permission to do this action" });
+
     //getting data from the request body
     const { personalDetails, educationDetails, familyDetails } = req.body;
     const updatedData = {
