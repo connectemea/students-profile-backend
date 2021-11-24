@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // importing the environmental variables
 require("dotenv/config");
@@ -18,6 +19,9 @@ const Upload = require("./src/Routes/Upload");
 
 //Using bodyparser through middleware to format the req body
 app.use(bodyParser.json());
+
+//setting the cors in the app
+app.use(cors());
 
 //ROUTES
 //teachers routes
