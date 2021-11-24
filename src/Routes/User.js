@@ -73,7 +73,7 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 });
 
 //registering new user
-router.patch("/register", authService.autheticateTheUser, async (req, res) => {
+router.patch("/register", async (req, res) => {
   console.log();
   //destructuring req body
   const { username, email, password } = req.body;
