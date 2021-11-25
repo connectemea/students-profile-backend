@@ -10,7 +10,7 @@ const getUsers = async () => {
 
 //To get User By certain coditions
 const getUsersBycondition = async (condition) => {
-  const users = await User.find(codition);
+  const users = await User.find(condition);
   return users;
 };
 

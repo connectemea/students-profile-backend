@@ -60,7 +60,7 @@ const StudentSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    cast: {
+    caste: {
       type: String,
       required: true,
     },
