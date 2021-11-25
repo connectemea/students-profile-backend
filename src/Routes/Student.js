@@ -45,7 +45,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
     //getting all student records
     const students = await studentService.getStudentByCondition(condition);
     //sending back the student records
-    res.status(403).json({
+    res.status(200).json({
       message: "All students records fethched successfully",
       data: students,
     });

@@ -42,7 +42,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
     //getting all teacher records
     const teachers = await teacherService.getTeacherByCondition(condition);
     //sending back the teacher records
-    res.status(403).json({
+    res.status(200).json({
       message: "All teachers records fethched successfully",
       data: teachers,
     });

@@ -12,10 +12,6 @@ const StudentSchema = mongoose.Schema({
   },
   //personal details
   personalDetails: {
-    profileImage: {
-      type: String,
-      required: true,
-    },
     name: {
       type: String,
       required: true,
