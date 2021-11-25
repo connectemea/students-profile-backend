@@ -135,4 +135,31 @@ router.patch("/:id", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
+//delete department
+router.delete("/:id", authService.autheticateTheUser, async (req, res) => {
+  try {
+    // check if this user have permission to do so
+    if (checkUserHavePermission("admin", req.body.user.type))
+      return res
+        .status(401)
+        .send({ message: "You have no permission to do this action" });
+
+    //getting created department
+    const department = await departmentService.deleteDepartment(req.params.id);
+
+    //check if the department exist
+    if (!department)
+      return res.status(404).send({ message: "department not found" });
+
+    //sending the response
+    res.status(200).send({
+      message: "deleted department successfully",
+      data: department,
+    });
+  } catch (err) {
+    res.status(404).send({ message: "something went wrong", data: err });
+  }
+
+})
+
 module.exports = router;

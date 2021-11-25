@@ -16,8 +16,12 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
       return res
         .status(401)
         .send({ message: "You have no permission to do this action" });
+    //setting the conditions
+    const conditions = {
+      sponsorId: req.body.user.id
+    };
     //getting all user records
-    const users = await userService.getUsers();
+    const users = await userService.getUsersBycondition(conditions);
     //sending back the user records
     res.status(200).json({
       message: "All users records fethched successfully",

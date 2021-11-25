@@ -21,7 +21,7 @@ const Upload = require("./src/Routes/Upload");
 app.use(bodyParser.json());
 
 //setting the cors in the app
-app.use(cors());
+app.options('*', cors())
 
 //ROUTES
 //teachers routes

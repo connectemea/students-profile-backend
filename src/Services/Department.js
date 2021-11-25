@@ -28,10 +28,17 @@ const updateDepartment = async (id, department) => {
   return updatedDepartment;
 };
 
+//To delete a department
+const deleteDepartment = async (id) => {
+  const deletedDepartment = await Department.findByIdAndDelete(id);
+  return deletedDepartment;
+}
+
 //export the functions
 module.exports = {
   getAllDepartments,
   getDepartmentById,
   createDepartment,
   updateDepartment,
+  deleteDepartment
 };

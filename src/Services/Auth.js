@@ -27,7 +27,7 @@ const autheticateTheUser = async (req, res, next) => {
   } catch (err) {
     return res
       .status(401)
-      .send({ message: "Invalid auth token", err: err.message });
+      .send({ message: "Invalid auth token" });
   }
 };
 
