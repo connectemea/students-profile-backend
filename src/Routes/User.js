@@ -33,6 +33,27 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
+router.get("/:userId", authService.autheticateTheUser, async (req, res) => {
+  try {
+    // check if this user have permission to do so
+    if (checkUserHavePermission("student", req.body.user.type))
+      return res
+        .status(401)
+        .send({ message: "You have no permission to do this action" });
+    
+    //getting all user records
+    const users = await userService.getUserById(userId);
+    //sending back the user records
+    res.status(200).json({
+      message: "user fethched successfully",
+      data: users,
+    });
+  } catch (err) {
+    //sending back the error
+    res.status(404).json({ message: err.message });
+  }
+})
+
 //create new user
 router.post("/", authService.autheticateTheUser, async (req, res) => {
   try {
@@ -78,7 +99,6 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 
 //registering new user
 router.patch("/register", async (req, res) => {
-  console.log();
   //destructuring req body
   const { username, email, password } = req.body;
 

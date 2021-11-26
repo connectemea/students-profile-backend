@@ -49,7 +49,7 @@ mongoose.connect(process.env.DB_CONNECTION, () =>
 
 // Running server
 app.listen(process.env.PORT || 3000, function () {
-  console.log(
+  console.info(
     "Express server listening on port %d in %s mode",
     this.address().port,
     app.settings.env

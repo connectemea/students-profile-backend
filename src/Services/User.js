@@ -16,7 +16,6 @@ const getUsersBycondition = async (condition) => {
 
 //To get an single user
 const getUserById = async (id) => {
-  console.log("called successfully gois");
   const user = await User.findById(id);
   return user;
 };
