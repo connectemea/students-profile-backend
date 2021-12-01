@@ -10,7 +10,11 @@ const getUsers = async () => {
 
 //To get User By certain coditions
 const getUsersBycondition = async (condition) => {
-  const users = await User.find(condition);
+  const users = await User.find(condition).select({
+    password: 0,
+    __v: 0,
+    createdTime: 0,
+  });
   return users;
 };
 
