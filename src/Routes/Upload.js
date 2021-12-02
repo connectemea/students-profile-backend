@@ -100,7 +100,7 @@ router.patch("/", authService.autheticateTheUser, async (req, res) => {
     path.join(__dirname, `../../public/uploads/${user.profileImage}`)
   );
   if (!isFileExists) return res.status(400).send({ message: "No file exists" });
-  
+
   //image to be deleted
   uploadService(req, res, async (err) => {
     if (err) {

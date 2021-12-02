@@ -4,10 +4,12 @@ const StudentSchema = mongoose.Schema({
   //sponsor ID
   sponsorId: {
     type: mongoose.ObjectId,
+    ref: "Users",
     required: true,
   },
   userId: {
     type: mongoose.ObjectId,
+    ref: "Users",
     required: true,
   },
   //personal details
@@ -181,6 +183,54 @@ const StudentSchema = mongoose.Schema({
         cgp: Number,
       },
     ],
+    //extra curricular activities
+    extraCurricular: [
+      {
+        activity: String,
+        yearOfParticipation: Number,
+        Price: String,
+        detailsOfExcellenceInPerformance: String,
+      },
+    ],
+    //depandentcies
+    dependantcies: {
+      classRoomLecture: {
+        count: Number,
+        remark: String,
+      },
+      LectureNote: {
+        count: Number,
+        remark: String,
+      },
+      notesProvidedByTeacher: {
+        count: Number,
+        remark: String,
+      },
+      caseStudy: {
+        count: Number,
+        remark: String,
+      },
+      observation: {
+        count: Number,
+        remark: String,
+      },
+      survey: {
+        count: Number,
+        remark: String,
+      },
+      expriments: {
+        count: Number,
+        remark: String,
+      },
+      extraReading: {
+        count: Number,
+        remark: String,
+      },
+      internetOrLearningApp: {
+        count: Number,
+        remark: String,
+      },
+    },
   },
   //family details
   familyDetails: {

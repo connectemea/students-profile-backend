@@ -13,7 +13,19 @@ const getStudentById = async (id) => {
 };
 //To get student by certain codition
 const getStudentByCondition = async (condition) => {
-  const student = await Student.find(condition);
+  const student = await Student.find(condition)
+    .select({
+      educationDetails: 0,
+      familyDetails: 0,
+      __v: 0,
+    })
+    .populate("userId", {
+      password: 0,
+      userType: 0,
+      __v: 0,
+      createdTime: 0,
+      sponsorId: 0,
+    });
   return student;
 };
 

@@ -13,7 +13,17 @@ const getTeacherById = async (id) => {
 };
 //To get teacher by certain codition
 const getTeacherByCondition = async (condition) => {
-  const teacher = await Teacher.find(condition);
+  const teacher = await Teacher.find(condition)
+    .select({
+      __v: 0,
+    })
+    .populate("userId", {
+      password: 0,
+      userType: 0,
+      __v: 0,
+      createdTime: 0,
+      sponsorId: 0,
+    });
   return teacher;
 };
 

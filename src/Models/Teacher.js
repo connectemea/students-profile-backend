@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const TeacherSchema = mongoose.Schema({
   userId: {
     type: mongoose.ObjectId,
+    ref: "Users",
     required: true,
   },
   sponsorId: {
