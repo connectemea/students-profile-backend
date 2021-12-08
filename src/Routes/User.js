@@ -19,7 +19,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
     //setting the conditions
     const conditions = {
       sponsorId: req.body.user.id,
-      userType:req.query.type?req.query.type:"student"
+      userType: req.query.type ? req.query.type : "student",
     };
     //getting all user records
     const users = await userService.getUsersBycondition(conditions);
@@ -34,26 +34,26 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
-// router.get("/:userId", authService.autheticateTheUser, async (req, res) => {
-//   try {
-//     // check if this user have permission to do so
-//     if (checkUserHavePermission("student", req.body.user.type))
-//       return res
-//         .status(401)
-//         .send({ message: "You have no permission to do this action" });
-    
-//     //getting all user records
-//     const users = await userService.getUserById(userId);
-//     //sending back the user records
-//     res.status(200).json({
-//       message: "user fethched successfully",
-//       data: users,
-//     });
-//   } catch (err) {
-//     //sending back the error
-//     res.status(404).json({ message: err.message });
-//   }
-// })
+router.get("/:userId", authService.autheticateTheUser, async (req, res) => {
+  try {
+    // check if this user have permission to do so
+    if (checkUserHavePermission("student", req.body.user.type))
+      return res
+        .status(401)
+        .send({ message: "You have no permission to do this action" });
+
+    //getting all user records
+    const users = await userService.getUserById(userId);
+    //sending back the user records
+    res.status(200).json({
+      message: "user fethched successfully",
+      data: users,
+    });
+  } catch (err) {
+    //sending back the error
+    res.status(404).json({ message: err.message });
+  }
+});
 
 //create new user
 router.post("/", authService.autheticateTheUser, async (req, res) => {
@@ -98,6 +98,65 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
+//forget password
+router.post("/forgot", async (req, res) => {
+  const { username, email } = req.body;
+  //checking username
+  if (!username || !email)
+    res.status(404).send({
+      message: "forgot password credentials are not given",
+    });
+
+  //condition to fetch the user
+  const conditions = {
+    username,
+    email,
+  };
+  //getting all user records
+  const userData = await userService.getUsersBycondition(conditions);
+
+  if (!userData || userData.length !== 1)
+    res.status(404).send({
+      message: "invalid username or password",
+    });
+
+  //data to embed as an paylod in token
+  const userCoreData = {
+    id: userData._id,
+    type: userData.userType,
+  };
+  //generating user jwt token
+  const userToken = await authService.createNewToken(userCoreData);
+
+  // sending back the generated token
+  res.status(201).send({
+    message: "user credential are successfully done",
+    data: {
+      userToken,
+    },
+  });
+});
+
+//reset password
+router.post("/reset", authService.autheticateTheUser,async (req, res) => {
+  const { password } = req.body;
+  //password is not provided
+  if (!password)
+    res.status(404).send({
+      message: "new password is not provided",
+    });
+  
+  //encrypting the password using cryptoJs
+  const encryptedPassword = authService.encryptPassword(password);
+
+  //updating the password
+  await userService.updateUser(req.body.user.id, {
+    password: encryptedPassword,
+  });
+
+  //sending back the response
+  res.status(200).send({message:"password successfully updated"})
+});
 //registering new user
 router.patch("/register", async (req, res) => {
   //destructuring req body
@@ -192,7 +251,7 @@ router.post("/login", async (req, res) => {
 
     res
       .status(200)
-      .send({ message: "Successfully logged in", data: {userToken }});
+      .send({ message: "Successfully logged in", data: { userToken } });
   } catch (err) {
     return res.status(401).send({ message: err.message });
   }

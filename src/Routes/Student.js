@@ -54,6 +54,28 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
     res.status(403).json({ message: err.message });
   }
 });
+router.get("/me", authService.autheticateTheUser, async (req, res) => {
+  try {
+    const student = await studentService.getStudentByCondition({
+      userId: req.body.user.id,
+    });
+
+    //check if the user data exisit or not
+    if (!student) res.status(404).send({ message: "student not exist" });
+
+    res
+      .status(200)
+      .send({
+        message: "student details fetched successfully",
+        data: { student },
+      });
+
+  } catch (err) {
+    res.status(404).send({
+      message: err.message,
+    });
+  }
+});
 
 //To get specific student
 router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
@@ -152,7 +174,7 @@ router.patch(
     //check student exist or not
     if (!studentProfile)
       return res.status(401).send({ message: "student not exist" });
-      
+
     // check this is student autheraized or not
     if (
       req.body.user.type !== "student" ||
