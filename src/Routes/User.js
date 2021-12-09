@@ -115,16 +115,17 @@ router.post("/forgot", async (req, res) => {
   //getting all user records
   const userData = await userService.getUsersBycondition(conditions);
 
-  if (!userData || userData.length !== 1)
-    res.status(404).send({
+  if (!userData || userData.length !== 1 || userData[0].status == "created")
+    return res.status(404).send({
       message: "invalid username or password",
     });
 
   //data to embed as an paylod in token
   const userCoreData = {
-    id: userData._id,
-    type: userData.userType,
+    id: userData[0]._id,
+    type: userData[0].userType,
   };
+
   //generating user jwt token
   const userToken = await authService.createNewToken(userCoreData);
 
@@ -138,14 +139,14 @@ router.post("/forgot", async (req, res) => {
 });
 
 //reset password
-router.post("/reset", authService.autheticateTheUser,async (req, res) => {
+router.patch("/reset", authService.autheticateTheUser, async (req, res) => {
   const { password } = req.body;
   //password is not provided
   if (!password)
     res.status(404).send({
       message: "new password is not provided",
     });
-  
+
   //encrypting the password using cryptoJs
   const encryptedPassword = authService.encryptPassword(password);
 
@@ -155,7 +156,7 @@ router.post("/reset", authService.autheticateTheUser,async (req, res) => {
   });
 
   //sending back the response
-  res.status(200).send({message:"password successfully updated"})
+  res.status(200).send({ message: "password successfully updated" });
 });
 //registering new user
 router.patch("/register", async (req, res) => {
