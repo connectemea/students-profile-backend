@@ -61,13 +61,13 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
     });
 
     //check if the user data exisit or not
-    if (!student) res.status(404).send({ message: "student not exist" });
+    if (!student.length || student.length !== 1) res.status(404).send({ message: "student not exist" });
 
     res
       .status(200)
       .send({
         message: "student details fetched successfully",
-        data: { student },
+        data: { student:student[0] },
       });
 
   } catch (err) {
