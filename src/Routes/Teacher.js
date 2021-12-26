@@ -21,6 +21,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
         .status(401)
         .send({ message: "You have no permission to do this action" });
     let condition = {};
+    
     //check dep query is passed or not
     if (req.query.department) {
       let condition = {
@@ -49,6 +50,28 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
   } catch (err) {
     //sending back the error
     res.status(403).json({ message: err.message });
+  }
+});
+
+//To get the requested teacher profile by userId
+router.get("/me", authService.autheticateTheUser, async (req, res) => {
+  try {
+    const teacher = await teacherService.getTeacherByCondition({
+      userId: req.body.user.id,
+    });
+
+    //check if the user data exisit or not
+    if (!teacher.length || teacher.length !== 1)
+      res.status(404).send({ message: "teacher not exist" });
+
+    res.status(200).send({
+      message: "teacher details fetched successfully",
+      data: { teacher: teacher[0] },
+    });
+  } catch (err) {
+    res.status(404).send({
+      message: err.message,
+    });
   }
 });
 
@@ -83,6 +106,8 @@ router.get("/:teacherId", authService.autheticateTheUser, async (req, res) => {
     });
   }
 });
+
+
 
 //creating new teacher
 router.post("/", authService.autheticateTheUser, async (req, res) => {
