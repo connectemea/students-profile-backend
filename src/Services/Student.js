@@ -29,6 +29,22 @@ const getStudentByCondition = async (condition) => {
   return student;
 };
 
+//To get full details of student by certain condition
+const getStudentByConditionFullData = async (condition) => {
+  const student = await Student.find(condition)
+    .select({
+      __v: 0,
+    })
+    .populate("userId", {
+      password: 0,
+      userType: 0,
+      __v: 0,
+      createdTime: 0,
+      sponsorId: 0,
+    });
+  return student;
+};
+
 // To create new Student
 const setStudent = async (userData) => {
   const student = new Student(userData);
@@ -47,6 +63,7 @@ module.exports = {
   getStudents,
   getStudentById,
   getStudentByCondition,
+  getStudentByConditionFullData,
   setStudent,
   updateStudent,
 };

@@ -56,7 +56,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
 });
 router.get("/me", authService.autheticateTheUser, async (req, res) => {
   try {
-    const student = await studentService.getStudentByCondition({
+    const student = await studentService.getStudentByConditionFullData({
       userId: req.body.user.id,
     });
 
