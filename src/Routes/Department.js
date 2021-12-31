@@ -7,6 +7,9 @@ const authService = require("../Services/Auth");
 
 const departmentService = require("../Services/Department");
 
+//To convert json to dotified object
+const dot = require("dot-object");
+
 // Utility to check the user permissions
 const { checkUserHavePermission } = require("../helper/userPermission");
 
@@ -15,7 +18,6 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
   try {
     // check if this user have permission to do so
     if (checkUserHavePermission("teacher", req.body.user.type))
-    
       return res
         .status(401)
         .send({ message: "You have no permission to do this action" });
@@ -120,10 +122,12 @@ router.patch("/:id", authService.autheticateTheUser, async (req, res) => {
       return res.status(404).send({ message: "department not found" });
 
     //getting created department
-    const department = await departmentService.updateDepartment(req.params.id, {
-      ...departmentDetails,
-      createdBy: req.body.user.id,
-    });
+    const department = await departmentService.updateDepartment(
+      req.params.id,
+      dot.dot({
+        ...departmentDetails,
+      })
+    );
 
     //sending the response
     res.status(200).send({
@@ -159,7 +163,6 @@ router.delete("/:id", authService.autheticateTheUser, async (req, res) => {
   } catch (err) {
     res.status(404).send({ message: "something went wrong", data: err });
   }
-
-})
+});
 
 module.exports = router;

@@ -9,6 +9,10 @@ const teacherService = require("../Services/Teacher");
 
 const userService = require("../Services/User");
 
+//To convert json to dotified object
+const dot = require("dot-object");
+
+
 // Utility to check the user permissions
 const { checkUserHavePermission } = require("../helper/userPermission");
 
@@ -21,7 +25,7 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
         .status(401)
         .send({ message: "You have no permission to do this action" });
     let condition = {};
-    
+
     //check dep query is passed or not
     if (req.query.department) {
       let condition = {
@@ -66,7 +70,7 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
 
     res.status(200).send({
       message: "teacher details fetched successfully",
-      data: { teacher: teacher[0] },
+      data: teacher[0],
     });
   } catch (err) {
     res.status(404).send({
@@ -107,8 +111,6 @@ router.get("/:teacherId", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
-
-
 //creating new teacher
 router.post("/", authService.autheticateTheUser, async (req, res) => {
   try {
@@ -138,12 +140,12 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 
     const createdTeacher = await teacherService.setTeacher(teacherDetails);
 
-    const updatedUser = await userService.updateUser(req.body.user.id, {
+    await userService.updateUser(req.body.user.id, {
       status: "filled",
     });
     res.status(201).send({
       message: "teacher created successfully",
-      data: { teacher: createdTeacher, user: updatedUser },
+      data: createdTeacher,
     });
   } catch (err) {
     res.status(404).send({
@@ -176,7 +178,7 @@ router.patch(
       //updating the teacher
       const updatedTeacher = await teacherService.updateTeacher(
         req.params.teacherId,
-        updatedData
+        dot.dot(updatedData)
       );
 
       res.status(201).send({

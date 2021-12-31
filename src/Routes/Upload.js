@@ -46,24 +46,24 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
 });
 
 //route to get uploaded image
-router.get("/:filename", authService.autheticateTheUser, async (req, res) => {
+router.get("/:filename", async (req, res) => {
   try {
-    if (checkUserHavePermission("teacher", req.body.user.type))
-      res
-        .status(404)
-        .send({ message: "You don't have permission to access this route" });
+    // if (checkUserHavePermission("teacher", req.body.user.type))
+    //   res
+    //     .status(404)
+    //     .send({ message: "You don't have permission to access this route" });
 
-    //user can only access their own image
-    const user = await userService.getUserById(req.body.user.id);
+    // //user can only access their own image
+    // const user = await userService.getUserById(req.body.user.id);
 
-    //check if the student have
-    if (
-      checkUserHavePermission("teacher", user.userType) &&
-      user.profileImage !== req.params.filename
-    )
-      res
-        .status(404)
-        .send({ message: "You don't have permission to access this route" });
+    // //check if the student have
+    // if (
+    //   checkUserHavePermission("teacher", user.userType) &&
+    //   user.profileImage !== req.params.filename
+    // )
+    //   res
+    //     .status(404)
+    //     .send({ message: "You don't have permission to access this route" });
 
     //get the file path
     const isFileExists = fs.existsSync(

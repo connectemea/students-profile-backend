@@ -2,6 +2,9 @@
 const express = require("express");
 const router = express.Router();
 
+//To convert json to dotified object
+const dot = require("dot-object");
+
 //auth utility
 const authService = require("../Services/Auth");
 
@@ -61,15 +64,13 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
     });
 
     //check if the user data exisit or not
-    if (!student.length || student.length !== 1) res.status(404).send({ message: "student not exist" });
+    if (!student.length || student.length !== 1)
+      res.status(404).send({ message: "student not exist" });
 
-    res
-      .status(200)
-      .send({
-        message: "student details fetched successfully",
-        data: { student:student[0] },
-      });
-
+    res.status(200).send({
+      message: "student details fetched successfully",
+      data: { student: student[0] },
+    });
   } catch (err) {
     res.status(404).send({
       message: err.message,
@@ -191,10 +192,11 @@ router.patch(
       educationDetails,
       familyDetails,
     };
+
     //updating the student
     const updatedStudent = await studentService.updateStudent(
-      req.body.user.id,
-      updatedData
+      req.params.studentId,
+      dot.dot(updatedData)
     );
 
     res.status(201).send({
