@@ -8,7 +8,17 @@ const getTeacher = async () => {
 };
 // To get an single student
 const getTeacherById = async (id) => {
-  const teacher = await Teacher.findById(id);
+  const teacher = await Teacher.findById(id)
+    .select({
+      __v: 0,
+    })
+    .populate("userId", {
+      password: 0,
+      userType: 0,
+      __v: 0,
+      createdTime: 0,
+      sponsorId: 0,
+    });
   return teacher;
 };
 //To get teacher by certain codition
