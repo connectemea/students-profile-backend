@@ -81,11 +81,26 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
 //To get specific student
 router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
   try {
+    if (req.body.user.type === "student") {
+      const student = await studentService.getStudentByCondition({
+        userId: req.body.user.id,
+      });
+
+      //To check student access to the document
+      if (!student || student.userId._id.toString() !== req.body.user.id)
+        return res
+          .status(401)
+          .send({ message: "You have no permission to do this action" });
+
+      //sending back the student details
+      return res.status(200).send({
+        message: "successfuly fetched your details",
+        data: student,
+      });
+    }
+    
     // check this is student autheraized or not
-    if (
-      checkUserHavePermission("teacher", req.body.user.type) &&
-      req.body.user.id !== req.params.studentId
-    )
+    if (checkUserHavePermission("teacher", req.body.user.type))
       return res
         .status(401)
         .send({ message: "You have no permission to do this action" });
@@ -153,7 +168,7 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
     });
     res.status(201).send({
       message: "student created successfully",
-      data: { student: createdStudent, user: updatedUser },
+      // data: { student: createdStudent, user: updatedUser },
     });
   } catch (err) {
     res.status(404).send({
@@ -167,42 +182,48 @@ router.patch(
   "/:studentId",
   authService.autheticateTheUser,
   async (req, res) => {
-    //get the student from the db
-    const studentProfile = await studentService.getStudentById(
-      req.params.studentId
-    );
+    try {
+      //get the student from the db
+      const studentProfile = await studentService.getStudentById(
+        req.params.studentId
+      );
 
-    //check student exist or not
-    if (!studentProfile)
-      return res.status(401).send({ message: "student not exist" });
+      //check student exist or not
+      if (!studentProfile)
+        return res.status(401).send({ message: "student not exist" });
 
-    // check this is student autheraized or not
-    if (
-      req.body.user.type !== "student" ||
-      studentProfile.userId.toString() !== req.body.user.id
-    )
-      return res
-        .status(401)
-        .send({ message: "You have no permission to do this action" });
+      // check this is student autheraized or not
+      if (
+        req.body.user.type !== "student" ||
+        studentProfile.userId._id.toString() !== req.body.user.id
+      )
+        return res
+          .status(401)
+          .send({ message: "You have no permission to do this action" });
 
-    //getting data from the request body
-    const { personalDetails, educationDetails, familyDetails } = req.body;
-    const updatedData = {
-      personalDetails,
-      educationDetails,
-      familyDetails,
-    };
+      //getting data from the request body
+      const { personalDetails, educationDetails, familyDetails } = req.body;
+      const updatedData = {
+        personalDetails,
+        educationDetails,
+        familyDetails,
+      };
 
-    //updating the student
-    const updatedStudent = await studentService.updateStudent(
-      req.params.studentId,
-      dot.dot(updatedData)
-    );
+      //updating the student
+      await studentService.updateStudent(
+        req.params.studentId,
+        dot.dot(updatedData)
+      );
 
-    res.status(201).send({
-      message: "student updated successfully",
-      data: updatedStudent,
-    });
+      res.status(201).send({
+        message: "student updated successfully",
+        // data: updatedStudent,
+      });
+    } catch (err) {
+      res.status(404).send({
+        message: err.message,
+      });
+    }
   }
 );
 

@@ -12,7 +12,6 @@ const userService = require("../Services/User");
 //To convert json to dotified object
 const dot = require("dot-object");
 
-
 // Utility to check the user permissions
 const { checkUserHavePermission } = require("../helper/userPermission");
 
@@ -168,7 +167,7 @@ router.patch(
       // check this is teacher autheraized or not
       if (
         req.body.user.type !== "teacher" ||
-        teacherProfile.userId.toString() !== req.body.user.id
+        teacherProfile.userId._id.toString() !== req.body.user.id
       )
         return res
           .status(401)
