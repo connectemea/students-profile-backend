@@ -17,6 +17,16 @@ const getUsersBycondition = async (condition) => {
   });
   return users;
 };
+const getUserByIdProfile = async (id) => {
+  const user = await User.findById(id).select({
+    __v: 0,
+    password: 0,
+    status: 0,
+    sponsorId: 0,
+    createdTime: 0,
+  });
+  return user;
+};
 
 //To get an single user
 const getUserById = async (id) => {
@@ -71,6 +81,7 @@ module.exports = {
   getUserById,
   getUserByLoginCredential,
   getUserStatusByLoginCredentials,
+  getUserByIdProfile,
   setUser,
   updateUser,
   checkUserExistsById,

@@ -34,6 +34,28 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
   }
 });
 
+//To get User profile
+router.get("/profile", authService.autheticateTheUser, async (req, res) => {
+  try {
+    //check if this user have permission to do so
+    if (checkUserHavePermission("student", req.body.user.type))
+      return res
+        .status(401)
+        .send({ message: "You have no permission to do this action" });
+    
+    //getting the user profile
+    const user = await userService.getUserByIdProfile(req.body.user.id);
+    //sending back the user profile
+    res.status(200).json({
+      message: "User profile fetched successfully",
+      data: user,
+    });
+  } catch (err) {
+    //sending back the error
+    res.status(404).json({ message: err.message });
+  }
+});
+
 router.get("/:userId", authService.autheticateTheUser, async (req, res) => {
   try {
     // check if this user have permission to do so
