@@ -21,7 +21,6 @@ const getUserByIdProfile = async (id) => {
   const user = await User.findById(id).select({
     __v: 0,
     password: 0,
-    status: 0,
     sponsorId: 0,
     createdTime: 0,
   });
