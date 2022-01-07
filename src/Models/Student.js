@@ -251,7 +251,7 @@ const StudentSchema = mongoose.Schema({
       educationQualification: String,
       annualIncome: Number,
     },
-    gardian: {
+    guardian: {
       name: {
         type: String,
         required: true,
