@@ -81,7 +81,7 @@ const StudentSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    permenentAddress: {
+    permanentAddress: {
       type: String,
       required: true,
     },
