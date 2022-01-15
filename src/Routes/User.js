@@ -276,8 +276,9 @@ router.post("/login", async (req, res) => {
       message: "Successfully logged in",
       data: {
         token,
-        ...userData,
-        password: undefined,
+        username: userData.username,
+        type: userData.userType,
+        status: userData.status,
       },
     });
   } catch (err) {
