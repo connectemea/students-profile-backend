@@ -18,6 +18,11 @@ const getTeacherById = async (id) => {
       __v: 0,
       createdTime: 0,
       sponsorId: 0,
+    })
+    .populate("department", {
+      __v: 0,
+      createdAt: 0,
+      createdBy: 0,
     });
   return teacher;
 };
@@ -33,6 +38,11 @@ const getTeacherByCondition = async (condition) => {
       __v: 0,
       createdTime: 0,
       sponsorId: 0,
+    })
+    .populate("department", {
+      __v: 0,
+      createdAt: 0,
+      createdBy: 0,
     });
   return teacher;
 };

@@ -20,6 +20,7 @@ const TeacherSchema = mongoose.Schema({
   department: {
     type: String,
     required: true,
+    ref: "Departments",
   },
   shortName: {
     type: String,

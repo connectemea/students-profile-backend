@@ -18,6 +18,11 @@ const getStudentById = async (id) => {
       __v: 0,
       createdTime: 0,
       sponsorId: 0,
+    })
+    .populate("personalDetails.department", {
+      __v: 0,
+      createdAt: 0,
+      createdBy: 0,
     });
   return student;
 };
@@ -35,6 +40,11 @@ const getStudentByCondition = async (condition) => {
       __v: 0,
       createdTime: 0,
       sponsorId: 0,
+    })
+    .populate("personalDetails.department", {
+      __v: 0,
+      createdAt: 0,
+      createdBy: 0,
     });
   return student;
 };
@@ -51,6 +61,11 @@ const getStudentByConditionFullData = async (condition) => {
       __v: 0,
       createdTime: 0,
       sponsorId: 0,
+    })
+    .populate("personalDetails.department", {
+      __v: 0,
+      createdAt: 0,
+      createdBy: 0,
     });
   return student;
 };

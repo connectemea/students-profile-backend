@@ -36,6 +36,7 @@ const StudentSchema = mongoose.Schema({
     department: {
       type: String,
       required: true,
+      ref: "Departments",
     },
     mobileNo: {
       type: Number,
