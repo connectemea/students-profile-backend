@@ -38,7 +38,7 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
           res.status(200).send({
             message: "File uploaded successfully",
             data: {
-              filepath: `/upload/${req.file.filename}`,
+              filepath: `${req.file.filename}`,
             },
           });
         }

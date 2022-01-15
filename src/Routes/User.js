@@ -42,7 +42,7 @@ router.get("/profile", authService.autheticateTheUser, async (req, res) => {
       return res
         .status(401)
         .send({ message: "You have no permission to do this action" });
-    
+
     //getting the user profile
     const user = await userService.getUserByIdProfile(req.body.user.id);
     //sending back the user profile
@@ -270,11 +270,16 @@ router.post("/login", async (req, res) => {
     };
 
     //generating user jwt token
-    const userToken = await authService.createNewToken(userCoreData);
+    const token = await authService.createNewToken(userCoreData);
 
-    res
-      .status(200)
-      .send({ message: "Successfully logged in", data: { userToken } });
+    res.status(200).send({
+      message: "Successfully logged in",
+      data: {
+        token,
+        ...userData,
+        password: undefined,
+      },
+    });
   } catch (err) {
     return res.status(401).send({ message: err.message });
   }
