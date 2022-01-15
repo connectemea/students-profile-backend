@@ -97,16 +97,13 @@ router.patch("/", authService.autheticateTheUser, async (req, res) => {
     //user can only access their own image
     const user = await userService.getUserById(req.body.user.id);
     //check if the student have
-    if (!user.profileImage)
-      res
-        .status(404)
-        .send({ message: "You don't have permission to update the image" });
-    const isFileExists = fs.existsSync(
-      path.join(__dirname, `../../public/uploads/${user.profileImage}`)
-    );
-    if (!isFileExists)
-      return res.status(400).send({ message: "No file exists" });
+    if (!user) res.status(404).send({ message: "user not exists" });
 
+    const isFileExists = user.profileImage
+      ? fs.existsSync(
+          path.join(__dirname, `../../public/uploads/${user.profileImage}`)
+        )
+      : false;
     //image to be deleted
     uploadService(req, res, async (err) => {
       if (err) {
@@ -115,26 +112,33 @@ router.patch("/", authService.autheticateTheUser, async (req, res) => {
         if (req.file == undefined) {
           res.status(400).send({ message: "No file selected" });
         } else {
+          const updateImage = async () => {
+            await userService.updateUser(user._id, {
+              profileImage: req.file.filename,
+            });
+            res.status(200).send({
+              message: "File updated successfully ",
+              data: {
+                filepath: `${req.file.filename}`,
+              },
+            });
+          }
           //delete the file
-          fs.unlink(
-            path.join(__dirname, `../../public/uploads/${user.profileImage}`),
-            async (err) => {
-              if (err) {
-                res.status(500).send({ message: err });
-              } else {
-                //setting the profile image path
-                await userService.updateUser(user._id, {
-                  profileImage: req.file.filename,
-                });
-                res.status(200).send({
-                  message: "File updated successfully ",
-                  data: {
-                    filepath: `/upload/${req.file.filename}`,
-                  },
-                });
+          if (isFileExists) {
+            fs.unlink(
+              path.join(__dirname, `../../public/uploads/${user.profileImage}`),
+              async (err) => {
+                if (err) {
+                  res.status(500).send({ message: err });
+                } else {
+                  //setting the profile image path
+                  await updateImage();
+                }
               }
-            }
-          );
+            );
+          } else {
+            await updateImage();
+          }
         }
       }
     });
