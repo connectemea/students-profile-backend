@@ -16,11 +16,6 @@ const { checkUserHavePermission } = require("../helper/userPermission");
 //get all departments
 router.get("/", authService.autheticateTheUser, async (req, res) => {
   try {
-    // check if this user have permission to do so
-    if (checkUserHavePermission("teacher", req.body.user.type))
-      return res
-        .status(401)
-        .send({ message: "You have no permission to do this action" });
 
     //getting all the departments
     const departments = await departmentService.getAllDepartments();
@@ -41,11 +36,6 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
 //get department by id
 router.get("/:id", authService.autheticateTheUser, async (req, res) => {
   try {
-    // check if this user have permission to do so
-    if (checkUserHavePermission("teacher", req.body.user.type))
-      return res
-        .status(401)
-        .send({ message: "You have no permission to do this action" });
     //getting all the departments
     const department = await departmentService.getDepartmentById(req.params.id);
 
