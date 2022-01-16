@@ -191,7 +191,7 @@ const StudentSchema = mongoose.Schema({
     extraCurricular: [
       {
         activity: String,
-        yearOfParticipation: Number,
+        yearOfParticipation: String,
         Price: String,
         detailsOfExcellenceInPerformance: String,
       },
