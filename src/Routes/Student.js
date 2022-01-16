@@ -81,7 +81,7 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
 router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
   try {
     if (req.body.user.type === "student") {
-      const student = await studentService.getStudentByCondition({
+      const student = await studentService.getStudentByConditionFullData({
         userId: req.body.user.id,
         _id: req.params.studentId,
       });
@@ -93,7 +93,7 @@ router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
       //sending back the student details
       return res.status(200).send({
         message: "successfuly fetched your details",
-        data: student,
+        data: student[0],
       });
     }
 
