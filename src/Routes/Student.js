@@ -83,13 +83,12 @@ router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
     if (req.body.user.type === "student") {
       const student = await studentService.getStudentByCondition({
         userId: req.body.user.id,
+        _id: req.params.studentId,
       });
 
       //To check student access to the document
-      if (!student || student.userId._id.toString() !== req.body.user.id)
-        return res
-          .status(401)
-          .send({ message: "You have no permission to do this action" });
+      if (!student)
+        return res.status(401).send({ message: "student not exsits" });
 
       //sending back the student details
       return res.status(200).send({
