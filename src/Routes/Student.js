@@ -66,10 +66,9 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
     //check if the user data exisit or not
     if (!student.length || student.length !== 1)
       res.status(404).send({ message: "student not exist" });
-
     res.status(200).send({
       message: "student details fetched successfully",
-      data: { student[0] },
+      data: student[0],
     });
   } catch (err) {
     res.status(404).send({
@@ -98,7 +97,7 @@ router.get("/:studentId", authService.autheticateTheUser, async (req, res) => {
         data: student,
       });
     }
-    
+
     // check this is student autheraized or not
     if (checkUserHavePermission("teacher", req.body.user.type))
       return res
