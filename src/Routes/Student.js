@@ -69,7 +69,7 @@ router.get("/me", authService.autheticateTheUser, async (req, res) => {
 
     res.status(200).send({
       message: "student details fetched successfully",
-      data: { student: student[0] },
+      data: { student[0] },
     });
   } catch (err) {
     res.status(404).send({
