@@ -161,7 +161,7 @@ const StudentSchema = mongoose.Schema({
         university: String,
         course: String,
         core: String,
-        complementry: String,
+        complementary: String,
         commonOne: String,
         commonTwo: String,
         open: String,
@@ -244,6 +244,7 @@ const StudentSchema = mongoose.Schema({
       officialAddress: String,
       educationQualification: String,
       annualIncome: Number,
+      number: Number,
     },
     mother: {
       name: String,
@@ -251,6 +252,7 @@ const StudentSchema = mongoose.Schema({
       officialAddress: String,
       educationQualification: String,
       annualIncome: Number,
+      number: Number,
     },
     guardian: {
       name: {
@@ -271,6 +273,10 @@ const StudentSchema = mongoose.Schema({
       },
       annualIncome: {
         type: String,
+        required: true,
+      },
+      number: {
+        type: Number,
         required: true,
       },
     },

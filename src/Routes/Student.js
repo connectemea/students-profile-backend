@@ -57,6 +57,48 @@ router.get("/", authService.autheticateTheUser, async (req, res) => {
     res.status(403).json({ message: err.message });
   }
 });
+
+//index route to get all student records on DB
+router.get("/all", authService.autheticateTheUser, async (req, res) => {
+  try {
+    // check if this user have permission to do so
+    if (checkUserHavePermission("teacher", req.body.user.type))
+      return res
+        .status(401)
+        .send({ message: "You have no permission to do this action" });
+
+    //setting the codition to fetch students
+    let condition = {};
+    //check dep query is passed or not
+    if (req.query.department) {
+      condition = {
+        ...condition,
+        "personalDetails.department": req.query.department
+          ? req.query.department
+          : undefined,
+      };
+    }
+    //check joinyear is passed or not
+    if (req.query.joinYear) {
+      condition = {
+        ...condition,
+        "personalDetails.yearOfJoin": req.query.joinYear
+          ? req.query.joinYear
+          : undefined,
+      };
+    }
+    //getting all student records
+    const students = await studentService.getStudentByCondition(condition);
+    //sending back the student records
+    res.status(200).json({
+      message: "All students records fethched successfully",
+      data: students,
+    });
+  } catch (err) {
+    //sending back the error
+    res.status(403).json({ message: err.message });
+  }
+});
 router.get("/me", authService.autheticateTheUser, async (req, res) => {
   try {
     const student = await studentService.getStudentByConditionFullData({
@@ -159,9 +201,9 @@ router.post("/", authService.autheticateTheUser, async (req, res) => {
       familyDetails,
     };
 
-    const createdStudent = await studentService.setStudent(studentDetails);
+    await studentService.setStudent(studentDetails);
 
-    const updatedUser = await userService.updateUser(req.body.user.id, {
+    await userService.updateUser(req.body.user.id, {
       status: "filled",
     });
     res.status(201).send({
@@ -206,16 +248,10 @@ router.patch(
         educationDetails,
         familyDetails,
       };
-
       //updating the student
-      await studentService.updateStudent(
-        req.params.studentId,
-        dot.dot(updatedData)
-      );
-
+      await studentService.updateStudent(req.params.studentId, updatedData);
       res.status(201).send({
         message: "student updated successfully",
-        // data: updatedStudent,
       });
     } catch (err) {
       res.status(404).send({
